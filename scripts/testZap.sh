@@ -37,7 +37,7 @@ checkForUpdate() {
 
 checkForUpdate
 
-if [ $# -eq 1 -a $1 = '-v' ]; then
+if [ $# -eq 1 -a "$1" = '-v' ]; then
   echo $SCRIPT_VERSION
   exit 0
 fi
