@@ -48,7 +48,7 @@ if [ $# -lt 2 ]; then
 fi
 
 set +e
-which curl
+which curl > /dev/null
 if [ $? -gt 0 ]; then
   echo "This script relies upon the 'curl' command, which wasn't found on your system."
   echo "Please install 'curl' and try again"
