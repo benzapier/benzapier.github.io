@@ -25,9 +25,17 @@ showHelp() {
   echo "      aNumber=123"
 }
 
+SCRIPT_URL="https://benzapier.github.io/scripts/testZap.sh"
 checkForUpdate() {
-  echo "coming soon ..."
+  repo_script_version=`curl $SCRIPT_URL --silent | grep -e ^SCRIPT_VERSION | cut -f2 -d\'`
+  if [ $SCRIPT_VERSION != $repo_script_version ]; then
+    echo "fyi - There's a newer version of this script available (v$repo_script_version)."
+    echo "      You can download it using this command:"
+    echo "      curl -O $SCRIPT_URL"
+  fi
 }
+
+checkForUpdate
 
 if [ $# -eq 1 -a $1 = '-v' ]; then
   echo $SCRIPT_VERSION
@@ -38,6 +46,15 @@ if [ $# -lt 2 ]; then
   showHelp
   exit 1
 fi
+
+set +e
+which curl
+if [ $? -gt 0 ]; then
+  echo "This script relies upon the 'curl' command, which wasn't found on your system."
+  echo "Please install 'curl' and try again"
+  exit 1
+fi
+set -e
 
 stepType=$1
 stepKey=$2
